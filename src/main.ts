@@ -31,11 +31,12 @@ async function run(): Promise<void> {
     const jobSteps = JSON.parse(core.getInput('steps', {required: false}) || '{}')
     const channel = core.getInput('channel', {required: false})
     const message = core.getInput('message', {required: false})
+    const customParameter = core.getInput('customParameter', {required: false})
     core.debug(`jobName: ${jobName}, jobStatus: ${jobStatus}`)
     core.debug(`channel: ${channel}, message: ${message}`)
 
     if (url) {
-      await send(url, jobName, jobStatus, jobSteps, channel, message, config)
+      await send(url, jobName, jobStatus, jobSteps, channel, message, customParameter, config)
       core.info(`Sent ${jobName} status of ${jobStatus} to Slack!`)
     } else {
       core.warning('No "SLACK_WEBHOOK_URL"s secret or "webhook-url" input configured. Skip.')

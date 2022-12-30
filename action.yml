@@ -21,6 +21,9 @@ inputs:
   message:
     description: Override message format for step
     required: false
+  customParameter:
+    description: additional variable for passing value
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

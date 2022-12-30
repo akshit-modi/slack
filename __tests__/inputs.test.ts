@@ -42,6 +42,7 @@ const jobSteps = {
 }
 const channel = '#deploy'
 let message = 'Successfully deployed to {{ env.ENVIRONMENT }}!'
+let customParameter = 'custom parameter'
 
 // mock github context
 const dump = JSON.parse(readFileSync('./__tests__/fixtures/push.json', 'utf-8'))
@@ -92,7 +93,7 @@ test('custom config of slack action using inputs for channel and message', async
     schema: yaml.FAILSAFE_SCHEMA
   }) as ConfigOptions
 
-  let res = await send(url, jobName, jobStatus, jobSteps, channel, message, config)
+  let res = await send(url, jobName, jobStatus, jobSteps, channel, message, customParameter, config)
   await expect(res).toStrictEqual({text: {status: 'ok'}})
 
   expect(JSON.parse(mockAxios.history.post[0].data)).toStrictEqual({

@@ -87,12 +87,13 @@ test('custom config of slack action using legacy attachments', async () => {
     .reply(500)
 
   let message = undefined
+  let customParameter = undefined
 
   let config = yaml.load(readFileSync('./__tests__/fixtures/slack-legacy.yml', 'utf-8'), {
     schema: yaml.FAILSAFE_SCHEMA
   }) as ConfigOptions
 
-  let res = await send(url, jobName, jobStatus, jobSteps, channel, message, config)
+  let res = await send(url, jobName, jobStatus, jobSteps, channel, message, customParameter, config)
   await expect(res).toStrictEqual({text: {status: 'ok'}})
 
   expect(JSON.parse(mockAxios.history.post[0].data)).toStrictEqual({

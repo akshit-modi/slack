@@ -120,10 +120,11 @@ function run() {
             const jobSteps = JSON.parse(core.getInput('steps', { required: false }) || '{}');
             const channel = core.getInput('channel', { required: false });
             const message = core.getInput('message', { required: false });
+            const customParameter = core.getInput('customParameter', { required: false });
             core.debug(`jobName: ${jobName}, jobStatus: ${jobStatus}`);
             core.debug(`channel: ${channel}, message: ${message}`);
             if (url) {
-                yield (0, slack_1.send)(url, jobName, jobStatus, jobSteps, channel, message, config);
+                yield (0, slack_1.send)(url, jobName, jobStatus, jobSteps, channel, message, customParameter, config);
                 core.info(`Sent ${jobName} status of ${jobStatus} to Slack!`);
             }
             else {
@@ -217,7 +218,7 @@ function stepIcon(status, opts) {
         return (opts === null || opts === void 0 ? void 0 : opts.skipped) || ':no_entry_sign:';
     return `:grey_question: ${status}`;
 }
-function send(url, jobName, jobStatus, jobSteps, channel, message, opts) {
+function send(url, jobName, jobStatus, jobSteps, channel, message, customParameter, opts) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         const eventName = process.env.GITHUB_EVENT_NAME;
@@ -342,6 +343,7 @@ function send(url, jobName, jobStatus, jobSteps, channel, message, opts) {
             jobName,
             jobStatus,
             jobSteps,
+            customParameter,
             eventName,
             workflow,
             workflowUrl,

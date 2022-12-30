@@ -134,6 +134,7 @@ export async function send(
   jobSteps: object,
   channel?: string,
   message?: string,
+  customParameter?: string,
   opts?: ConfigOptions
 ): Promise<IncomingWebhookResult> {
   const eventName = process.env.GITHUB_EVENT_NAME
@@ -274,6 +275,7 @@ export async function send(
     jobName,
     jobStatus,
     jobSteps,
+    customParameter,
     eventName,
     workflow,
     workflowUrl,

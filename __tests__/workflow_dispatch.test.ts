@@ -10,6 +10,7 @@ const jobStatus = 'Success'
 const jobSteps = {}
 const channel = '@override'
 const message = undefined
+const customParameter = undefined
 
 // mock github context
 const dump = JSON.parse(readFileSync('./__tests__/fixtures/workflow_dispatch.json', 'utf-8'))
@@ -54,7 +55,7 @@ test('workflow_dispatch event to slack', async () => {
     .onAny()
     .reply(500)
 
-  const res = await send(url, jobName, jobStatus, jobSteps, channel, message)
+  const res = await send(url, jobName, jobStatus, jobSteps, channel, message, customParameter)
   await expect(res).toStrictEqual({text: {status: 'ok'}})
 
   expect(JSON.parse(mockAxios.history.post[0].data)).toStrictEqual({
